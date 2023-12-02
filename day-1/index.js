@@ -1,10 +1,15 @@
-async function fetchData() {
-  const response = await fetch('data.txt');
-  const text = await response.text();
-  return text.split(/\r|\n/);
-}
-
-fetchData().then((arr) => console.log(getCalibrationVal(arr)));
+fetch('data.txt')
+  .then((response) => {
+    if (response.status !== 200) {
+      alert(`Error: Unable to load preview, HTTP response ${response.status}.`);
+    }
+    response.text();
+  })
+  .then((data) => {
+    const arr = data.split(/\r|\n/);
+    getCalibrationVal(arr);
+  })
+  .catch((error) => alert(`Error: ${error}`));
 
 const getCalibrationVal = (arr) => {
   let numsArr = [];
